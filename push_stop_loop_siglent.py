@@ -10,12 +10,14 @@ IDVENDOR = 0xf4ed
 IDPRODUCT = 0xee3a
 
 SIGLENT_OSC_NAME = f'USB0::{IDVENDOR}::{IDPRODUCT}::{SERIALNUM}::0::INSTR'
-
 rm = pyvisa.ResourceManager()
 inst = rm.open_resource(SIGLENT_OSC_NAME)
-footswitch_press = input()
-try:
-    inst.query("STOP")
-except USBError:
-    pass
 
+footswitch_press = input()
+while footswitch_press.strip() == '':
+    print("STOP")
+    try:
+        inst.query("STOP")
+    except USBError:
+        pass
+    footswitch_press = input()
